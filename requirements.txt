@@ -1,0 +1,2 @@
+guess-file-mime-type
+textcompat

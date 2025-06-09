@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "resumable-file-server"
+version = "0.1.0a1"
+description = "A simple, multithreaded HTTP file server supporting resumable downloads and file uploads written in pure Python. Drop-in replacement for `SimpleHTTPServer`, `http.server`."
+readme = "README.md"
+requires-python = ">=2"
+license = "MIT"
+authors = [
+  { name="Jifeng Wu", email="jifengwu2k@gmail.com" }
+]
+classifiers = [
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "guess-file-mime-type",
+    "textcompat"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jifengwu2k/resumable-file-server"
+"Bug Tracker" = "https://github.com/jifengwu2k/resumable-file-server/issues"
