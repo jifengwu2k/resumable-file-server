@@ -1,29 +1,23 @@
 # Resumable File Server
 
-A simple multithreaded HTTP file server that supports **resumable downloads** (via HTTP Range requests) and **serves files securely from a specified directory**.
+A simple, multithreaded HTTP file server supporting resumable downloads and file uploads written in pure Python. Drop-in replacement for `SimpleHTTPServer`, `http.server`.
 
 ## Features
 
+- Supports Python 2 and Python 3
+- Proper handling of Unicode
 - Support for HTTP Range requests (partial downloads)
 - Multithreaded serving (handles many clients)
+- Directory browsing and file upload via UTF-8 HTML interface
 - Specify root directory to serve files from
 - Configurable host/IP and port
-- No dependencies (pure Python)
 
 ## Usage
 
-```bash
-python resumable_file_server.py --host your-host --port 8000 --root /path/to/files
-```
-
-This will serve files from `/path/to/files` at `http://your-host:8000`.
-
-### Example
-
-Serve files inside `/home/user/downloads` on port 8080:
+Serve files inside `/home/user` on `localhost:8080`:
 
 ```bash
-python resumable_file_server.py --host localhost --port 8080 --root /home/user/downloads
+python -m resumable_file_server 8080 --host localhost --port  --root /home/user/
 ```
 
 Then download with `curl`:
@@ -32,12 +26,20 @@ Then download with `curl`:
 curl -O -C - http://localhost:8080/largefile.zip
 ```
 
+You can also upload a file (this uploads it to `/home/user/images/`):
+
+```
+curl -X POST -F "file=@/path/to/photo.jpg" http://localhost:8080/images/
+```
+
+And you will see an UTF-8 HTML with a file picker and upload button at the bottom if you open `http://localhost:8080/` with your browser.
+
 ### Arguments
 
 | Argument | Description | Default |
-| --- | --- |  |
-| `--port`, `-p` | Port to listen on | `8000` |
-| `--host` | Host/IP address to bind to | `'localhost` |
+| --- | --- | --- |
+| `port` | Port to listen on | `8000` |
+| `--host` | Host/IP address to bind to | `0.0.0.0` |
 | `--root`, `-r` | Root directory to serve files from | `.` (current directory) |
 
 ## Security Notes
