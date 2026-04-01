@@ -8,7 +8,7 @@ A simple, multithreaded HTTP file server supporting resumable downloads and file
 - Proper handling of Unicode
 - Support for HTTP Range requests (partial downloads)
 - Multithreaded serving (handles many clients)
-- Directory browsing and file upload via UTF-8 HTML interface
+- Directory browsing and multi-file upload via UTF-8 HTML interface
 - Specify root directory to serve files from
 - Configurable host/IP and port
 
@@ -26,13 +26,16 @@ Then download with `curl`:
 curl -O -C - http://localhost:8080/largefile.zip
 ```
 
-You can also upload a file (this uploads it to `/home/user/images/`):
+You can also upload one or more files (this uploads them to `/home/user/images/`):
 
-```
-curl -X POST -F "file=@/path/to/photo.jpg" http://localhost:8080/images/
+```bash
+curl -X POST \
+  -F "file=@/path/to/photo.jpg" \
+  -F "file=@/path/to/document.pdf" \
+  http://localhost:8080/images/
 ```
 
-And you will see an UTF-8 HTML with a file picker and upload button at the bottom if you open `http://localhost:8080/` with your browser.
+And you will see an UTF-8 HTML with a multi-file picker and upload button at the bottom if you open `http://localhost:8080/` with your browser.
 
 ### Arguments
 

@@ -183,7 +183,7 @@ class ResumableFileRequestHandler(BaseHTTPRequestHandler):
                 u"</ul>",
                 u"<hr>",
                 u"<form method='POST' enctype='multipart/form-data'>",
-                u"<input type='file' name='file'>",
+                u"<input type='file' name='file' multiple>",
                 u"<input type='submit' value='Upload'>",
                 u"</form>",
                 u"</body>",
@@ -302,6 +302,11 @@ class ResumableFileRequestHandler(BaseHTTPRequestHandler):
             self.send_error(400, "Invalid multipart/form-data: %s" % str(e))
             return
 
+        if not files:
+            self.send_error(400, "No files were uploaded")
+            return
+
+        uploaded_count = 0
         for utf_8_filename, filedata in files:
             unicode_filename = utf_8_str_to_text(utf_8_filename)
             filesystem_filename = text_to_filesystem_str(unicode_filename)
@@ -314,6 +319,7 @@ class ResumableFileRequestHandler(BaseHTTPRequestHandler):
             with open(filesystem_destination_path, 'wb') as f:
                 f.write(filedata)
 
+            uploaded_count += 1
             logging.info(
                 "Uploaded file %s saved (%d bytes) from %s:%d",
                 unicode_filename,
@@ -325,7 +331,7 @@ class ResumableFileRequestHandler(BaseHTTPRequestHandler):
         self.send_response(303)
         self.send_header("Location", self.path)
         self.end_headers()
-        logging.info("Upload completed for %s:%d", client_ip, client_port)
+        logging.info("Upload completed for %s:%d (%d files)", client_ip, client_port, uploaded_count)
 
 
 class ThreadingHTTPServer(ThreadingMixIn, BaseHTTPServer):
