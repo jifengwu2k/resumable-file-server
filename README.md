@@ -12,12 +12,20 @@ A simple, multithreaded HTTP file server supporting resumable downloads and file
 - Specify root directory to serve files from
 - Configurable host/IP and port
 
+## Installation
+
+```bash
+pip install resumable-file-server
+```
+
+After installation, run it as `resumable_file_server`.
+
 ## Usage
 
 Serve files inside `/home/user` on `localhost:8080`:
 
 ```bash
-python -m resumable_file_server 8080 --host localhost --port  --root /home/user/
+resumable_file_server 8080 --host localhost --port  --root /home/user/
 ```
 
 Then download with `curl`:

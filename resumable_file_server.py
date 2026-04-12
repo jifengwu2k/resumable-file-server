@@ -347,11 +347,15 @@ class ResumableFileServer(ThreadingHTTPServer):
 def run(host, port, root):
     server_address = (host, port)
     httpd = ResumableFileServer(server_address, ResumableFileRequestHandler, root)  # type: ignore
-    logging.info("Serving files from %s at http://%s:%d (Ctrl+C to stop)..." % (httpd.root_directory, host, port))
+
+    logging.info('Serving HTTP on %s port %d ...', host, port)
+    logging.info("Serving files from %s" % httpd.root_directory)
     httpd.serve_forever()
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
     parser = argparse.ArgumentParser(description="Start an HTTP file server with resumable upload/download support.")
     parser.add_argument("port", type=int, nargs='?', default=8000, help="Port to listen on (default: 8000)")
     parser.add_argument("--host", type=str, default="localhost", help="Host/IP address to bind (default: localhost)")
@@ -366,5 +370,4 @@ def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     main()
