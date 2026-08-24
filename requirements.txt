@@ -1,3 +1,8 @@
+enum34; python_version < '3.4'
 fspathverbs
 guess-file-mime-type
+httppackets
+minimal-thread-pool
+parse-multipart-form-data
 textcompat
+typing; python_version < '3.5'

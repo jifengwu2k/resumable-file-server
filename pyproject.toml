@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "resumable-file-server"
-version = "0.1.0a5"
-description = "A simple, multithreaded HTTP file server supporting resumable downloads and file uploads written in pure Python. Drop-in replacement for `SimpleHTTPServer`, `http.server`."
+version = "0.1.0a6"
+description = "A simple, multithreaded HTTP file server supporting resumable downloads and streaming file uploads, written in pure Python with httppackets and minimal-thread-pool."
 readme = "README.md"
 requires-python = ">=2"
 license = "MIT"
@@ -18,9 +18,14 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
+    "enum34; python_version < '3.4'",
     "fspathverbs",
     "guess-file-mime-type",
-    "textcompat"
+    "httppackets",
+    "minimal-thread-pool",
+    "parse-multipart-form-data",
+    "textcompat",
+    "typing; python_version < '3.5'",
 ]
 
 [project.scripts]
@@ -29,3 +34,6 @@ resumable_file_server = "resumable_file_server:main"
 [project.urls]
 "Homepage" = "https://github.com/jifengwu2k/resumable-file-server"
 "Bug Tracker" = "https://github.com/jifengwu2k/resumable-file-server/issues"
+
+[tool.setuptools]
+py-modules = ["resumable_file_server"]
